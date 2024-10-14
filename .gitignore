@@ -1,0 +1,55 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+  const handleSendMessage = (e) => {
+    e.preventDefault();
+    if (inputMessage.trim() && chatselect) {
+      const newMessage = {
+        id: messages.length + 1,
+        text: inputMessage,
+        sender: "self",
+        time: new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+      };
+      setMessages([...messages, newMessage]);
+      setInputMessage("");
+
+      // Update last message in chats
+      const updatedChats = chats.map((chat) =>
+        chat.id === selectedChat.id
+          ? {
+              ...chat,
+              lastMessage: inputMessage,
+              time: newMessage.time,
+              unread: 0,
+            }
+          : chat
+      );
+      setChats(updatedChats);
+    }
+  };
